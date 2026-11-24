@@ -1,70 +1,154 @@
-# Getting Started with Create React App
+# 👨‍🍳 Chef Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Application web **front-end** développée avec **React** pour gérer une plateforme de restauration : inscription des **chefs** et des **clients**, gestion des **plats** et gestion des **utilisateurs**, le tout présenté dans un site vitrine de restaurant.
 
-## Available Scripts
+> ℹ️ Il n'y a pas de serveur ni de base de données : toutes les données sont enregistrées dans le **`localStorage`** du navigateur. Elles restent donc propres à chaque navigateur.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 📑 Sommaire
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [Fonctionnalités](#-fonctionnalités)
+- [Technologies utilisées](#-technologies-utilisées)
+- [Structure du projet](#-structure-du-projet)
+- [Pages et routes](#-pages-et-routes)
+- [Données enregistrées](#-données-enregistrées)
+- [Prérequis](#-prérequis)
+- [Installation et lancement](#-installation-et-lancement)
+- [Scripts disponibles](#-scripts-disponibles)
+- [Auteure](#-auteure)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## ✨ Fonctionnalités
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🏠 Site vitrine
+- Page d'accueil de restaurant composée de plusieurs sections : bannière, offres exclusives, à propos, vidéo, menu, équipe de chefs, réservation de table et avis clients
 
-### `npm run build`
+### 👥 Gestion des utilisateurs
+- **Inscription d'un chef** : prénom, nom, email, téléphone, adresse, mot de passe, spécialité, expérience
+- **Inscription d'un client** : prénom, nom, email, téléphone, adresse, mot de passe
+- **Liste des chefs et des clients** dans deux tableaux distincts
+- **Consultation des détails** d'un utilisateur et **modification** de ses informations via une fenêtre modale
+- **Suppression** d'un utilisateur
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 🍽️ Gestion des plats
+- **Ajout d'un plat** (nom, description, prix) avec validation : champs obligatoires et prix numérique
+- **Liste des plats** dans un tableau
+- **Détails d'un plat**
+- **Modification** d'un plat via une fenêtre modale
+- **Suppression** d'un plat
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🧰 Technologies utilisées
 
-### `npm run eject`
+| Domaine | Technologie |
+| --- | --- |
+| Bibliothèque UI | React 18 |
+| Routage | React Router DOM 6 |
+| Style | Bootstrap 5.3 et CSS du template |
+| Outil de build | Create React App (`react-scripts` 5) |
+| Stockage | `localStorage` du navigateur |
+| Tests | React Testing Library |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📂 Structure du projet
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+Chef-Management-System/
+├── public/                    # index.html, CSS et images du template
+├── src/
+│   ├── components/
+│   │   ├── Header.js          # Barre de navigation
+│   │   ├── Footer.js          # Pied de page
+│   │   ├── Home.js            # Page d'accueil (assemble les sections)
+│   │   ├── Banner.js, Exclusive.js, About.js, Video.js, Food.js,
+│   │   │   Chefs.js, Reservation.js, Review.js, ExclusiveItem.js   # Sections de l'accueil
+│   │   ├── Login.js           # Formulaire de connexion
+│   │   ├── SignupChef.js      # Inscription d'un chef
+│   │   ├── SignupClient.js    # Inscription d'un client
+│   │   ├── UsersList.js       # Liste des chefs et des clients
+│   │   ├── UserDetails.js     # Détails / modification d'un utilisateur
+│   │   ├── AddDish.js         # Ajout d'un plat
+│   │   ├── DishList.js        # Liste, modification et suppression des plats
+│   │   └── DishDetails.js     # Détails d'un plat
+│   ├── App.js                 # Routes de l'application
+│   └── index.js               # Point d'entrée
+├── package.json
+└── README.md
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🧭 Pages et routes
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Route | Page |
+| --- | --- |
+| `/` | Accueil |
+| `/login` | Connexion |
+| `/signup-chef` | Inscription chef |
+| `/signup-client` | Inscription client |
+| `/add-dish` | Ajouter un plat |
+| `/dish-list` | Liste des plats |
+| `/dish/:index` | Détails d'un plat |
+| `/users-list` | Liste des chefs et des clients |
+| `/user-details` | Détails d'un utilisateur |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 💾 Données enregistrées
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Les données sont stockées dans le `localStorage` sous les clés suivantes :
 
-### Analyzing the Bundle Size
+| Clé | Contenu |
+| --- | --- |
+| `chefData` | Liste des chefs inscrits |
+| `clientData` | Liste des clients inscrits |
+| `dishes` | Liste des plats (`name`, `description`, `price`) |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+> 💡 Pour réinitialiser les données, ouvre les outils de développement du navigateur (`F12`) → onglet **Application** → **Local Storage**, puis supprime les clés ci-dessus.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## ✅ Prérequis
 
-### Advanced Configuration
+- [Node.js](https://nodejs.org/) (version LTS recommandée) et npm
+- [Git](https://git-scm.com/)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 🚀 Installation et lancement
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+# 1. Cloner le dépôt
+git clone https://github.com/ranimbr/Chef-Management-System.git
+cd Chef-Management-System
 
-### `npm run build` fails to minify
+# 2. Installer les dépendances
+npm install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# 3. Lancer l'application en mode développement
+npm start
+```
+
+L'application est accessible sur [http://localhost:3000](http://localhost:3000).
+
+---
+
+## 📜 Scripts disponibles
+
+| Commande | Description |
+| --- | --- |
+| `npm start` | Lance l'application en mode développement |
+| `npm run build` | Génère la version de production dans le dossier `build/` |
+| `npm test` | Lance les tests |
+
+---
+
+
+
+## 👩‍💻 Auteure
+
+**Ranim Ben Rajeb** — [@ranimbr](https://github.com/ranimbr)
